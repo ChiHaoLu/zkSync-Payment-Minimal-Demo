@@ -39,6 +39,30 @@ export const getWallet = (privateKey?: string) => {
   return wallet;
 };
 
+export const getDeployer = () => {
+  const wallet = getWallet();
+  return new Deployer(hre, wallet);
+}
+
+export const getArtifact = async (contractArtifactName: string) => {
+  const wallet = getWallet();
+  const deployer = new Deployer(hre, wallet);
+  return await deployer
+    .loadArtifact(contractArtifactName)
+    .catch((error) => {
+      if (
+        error?.message?.includes(
+          `Artifact for contract "${contractArtifactName}" not found.`
+        )
+      ) {
+        console.error(error.message);
+        throw `⛔️ Please make sure you have compiled your contracts or specified the correct contract name!`;
+      } else {
+        throw error;
+      }
+    });
+};
+
 export const verifyEnoughBalance = async (wallet: Wallet, amount: bigint) => {
   // Check if the wallet has enough balance
   const balance = await wallet.getBalance();

@@ -1,26 +1,34 @@
-import { utils, Wallet, Provider } from "zksync-ethers";
-import * as ethers from "ethers";
-import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { Deployer } from "@matterlabs/hardhat-zksync-deploy";
-// load env file
+import { utils } from "zksync-ethers";
+import { getDeployer, verifyContract } from "./utils";
+import * as hre from "hardhat";
+
 import dotenv from "dotenv";
 dotenv.config();
 
-const DEPLOYER_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || "";
-
-export default async function (hre: HardhatRuntimeEnvironment) {
-  const provider = new Provider(hre.config.networks.zkSyncSepoliaTestnet.url);
-  const wallet = new Wallet(DEPLOYER_PRIVATE_KEY, provider);
-  const deployer = new Deployer(hre, wallet);
+export default async function () {
+  const vault = process.env.VAULT_ADDRESS;
+  const deployer = getDeployer()
   const factoryArtifact = await deployer.loadArtifact("AAFactory");
   const aaArtifact = await deployer.loadArtifact("Account");
-
+  const constructorArguments = [utils.hashBytecode(aaArtifact.bytecode), vault]
   const factory = await deployer.deploy(
     factoryArtifact,
-    [utils.hashBytecode(aaArtifact.bytecode)],
+    constructorArguments,
     undefined,
     [aaArtifact.bytecode]
   );
   const factoryAddress = await factory.getAddress();
-  console.log(`AA factory address: ${factoryAddress}`);
+  console.log(`Factory address: ${factoryAddress}`);
+
+  const constructorArgs = factory.interface.encodeDeploy(constructorArguments);
+  const fullContractSource = `${factoryArtifact.sourceName}:${factoryArtifact.contractName}`;
+  if (hre.network.config.verifyURL) {
+    console.log(`Requesting contract verification...`);
+    await verifyContract({
+      address: factoryAddress,
+      contract: fullContractSource,
+      constructorArguments: constructorArgs,
+      bytecode: factoryArtifact.bytecode,
+    });
+  }
 }

@@ -10,10 +10,8 @@
   "author": "ChiHaoLu <b08303113@ntu.edu.tw>",
   "license": "MIT",
   "scripts": {
-    "deploy": "hardhat deploy-zksync --script deploy.ts",
-    "interact": "hardhat deploy-zksync --script interact.ts",
-    "execute:local": "hardhat deploy-zksync --network hardhat --script",
-    "execute:eraSepolia": "hardhat deploy-zksync --network zkSyncSepoliaTestnet --script",
+    "execute:local": "hardhat compile & hardhat deploy-zksync --network hardhat --script",
+    "execute:eraSepolia": "hardhat compile & hardhat deploy-zksync --network zkSyncSepoliaTestnet --script",
     "compile": "hardhat compile",
     "clean": "hardhat clean",
     "test": "hardhat test --network hardhat"
