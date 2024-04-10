@@ -1,30 +1,36 @@
 # zkSync Payment Minimal Demo
 
-- Requirement: 
-  - [Docker](https://docs.docker.com/get-docker/)
-  - node v18.16.1 (npm v9.5.1)
+-   Requirement:
+    -   [Docker](https://docs.docker.com/get-docker/)
+    -   node v18.16.1 (npm v9.5.1)
 
 ---
 
 ## Test w/ zkSync Local Devnet
 
-- To run zkSync local chain, do:
+-   To run zkSync local chain, do:
 
 ```shell
 cd local-setup
 ./start.sh
 ```
 
-- Compile:
+-   Compile:
 
 ```shell
 yarn hardhat compile
 ```
 
-- Test
+-   Test
 
 ```shell
 yarn hardhat test
+```
+
+-   Format code
+
+```shell
+yarn format
 ```
 
 ---
@@ -101,11 +107,12 @@ $ yarn execute:eraSepolia deployPaymaster.ts
 >
 ```
 
----
+### 5. Demo: transfer with paymaster
 
-## Demo
-
-TBD
+```shell
+$ yarn execute:eraSepolia transferWithPaymaster.ts
+>
+```
 
 ---
 

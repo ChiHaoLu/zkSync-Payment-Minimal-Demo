@@ -144,9 +144,9 @@ contract Account is IAccount, IERC1271 {
             require(success);
         }
 
-        try
-            IERC20(vault.token()).transfer(address(vault), 1)
-        {} catch (bytes memory revertReason) {
+        try IERC20(vault.token()).transfer(address(vault), 1) {} catch (
+            bytes memory revertReason
+        ) {
             if (revertReason.length <= 4) {
                 revert("Failed to transferFrom from users' account");
             } else {
