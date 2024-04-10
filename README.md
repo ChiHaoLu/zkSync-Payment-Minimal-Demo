@@ -107,7 +107,7 @@ $ yarn execute:eraSepolia deployPaymaster.ts
 >
 ```
 
-### 5. Demo: transfer with paymaster
+### 5. Transfer with paymaster
 
 ```shell
 $ yarn execute:eraSepolia transferWithPaymaster.ts
@@ -116,9 +116,22 @@ $ yarn execute:eraSepolia transferWithPaymaster.ts
 
 ---
 
+## Overall demo
+
+1. Call the Account Factory to deploy new account
+1. Mint stable coin to account
+1. Transfer stable coin and pay the gas fee with Stable Coin Paymaster
+1. Log the transaction information
+
+---
+
 ## TODO
 
-### High: Complete the spec. and system design documentation
+### High: Overall Demo
+
+RT
+
+### High: Complete the spec. and system design doc.
 
 RT
 
