@@ -118,16 +118,15 @@ $ yarn execute:eraSepolia transferWithPaymaster.ts
 
 ## Overall demo
 
+1. Deposit ETH to paymaster
 1. Call the Account Factory to deploy new account
 1. Mint stable coin to account
-1. Transfer stable coin and pay the gas fee with Stable Coin Paymaster
-1. Check the system works
-
--   Sender transfer the token
--   Recipient receive the token
--   Vault(Collection) receive the fee
--   Paymaster pay the gas fee
-
+1. Account transfers stable coin and pays the gas fee with Stable Coin Paymaster
+1. Make sure the system works
+    1. Sender transfers the token
+    1. Recipient receives the token
+    1. Vault(Collection) receives the fee
+    1. Paymaster pays the gas fee
 1. Log the transaction information
 
 ---
@@ -143,6 +142,10 @@ RT
 RT
 
 ### High: Complete the test of the contracts
+
+RT
+
+### Medium: Implement the event in the contracts to help log information
 
 RT
 
