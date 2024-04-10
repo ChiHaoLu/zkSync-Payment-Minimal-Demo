@@ -35,7 +35,7 @@ yarn format
 
 ---
 
-## Deployment w/ zkSync Sepolia
+## Deployment and Demo w/ zkSync Sepolia
 
 ### 0. Preparation
 
@@ -113,6 +113,26 @@ $ yarn execute:eraSepolia deployPaymaster.ts
 $ yarn execute:eraSepolia transferWithPaymaster.ts
 >
 ```
+
+---
+
+## TODO
+
+### High: Complete the spec. and system design documentation
+
+RT
+
+### High: Complete the test of the contracts
+
+RT
+
+### Medium: Use the stablecoin-evm to replace the StableCoin.sol
+
+Should figure out how USDC work on zkSync Era, or we can use DAI for product too.
+
+### Low: Verify the account contract
+
+See the [issue](https://github.com/matter-labs/zksync-era/issues/1629).
 
 ---
 

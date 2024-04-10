@@ -44,8 +44,7 @@ export default async function (hre: HardhatRuntimeEnvironment) {
     ).wait()
 
     // Verify the account
-    // doesn't support for account now
-    // https://github.com/matter-labs/zksync-era/issues/1629
+    // It doesn't support for account now - https://github.com/matter-labs/zksync-era/issues/1629
 
     /**
   const aaArtifact = await deployer.loadArtifact("Account");
