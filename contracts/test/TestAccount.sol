@@ -11,7 +11,6 @@ import "@matterlabs/zksync-contracts/l2/system-contracts/Constants.sol";
 // to call non-view function of system contracts
 import "@matterlabs/zksync-contracts/l2/system-contracts/libraries/SystemContractsCaller.sol";
 
-
 contract TestAccount is IAccount, IERC1271  {
     // to get transaction hash
     using TransactionHelper for Transaction;

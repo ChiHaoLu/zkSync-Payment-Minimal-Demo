@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import "./interface/IVault.sol";
 import "@matterlabs/zksync-contracts/l2/system-contracts/interfaces/IAccount.sol";
 import "@matterlabs/zksync-contracts/l2/system-contracts/libraries/TransactionHelper.sol";
 import "@openzeppelin/contracts/interfaces/IERC1271.sol";
@@ -17,7 +18,7 @@ contract Account is IAccount, IERC1271 {
 
     // state variable for account owner
     address public owner;
-    address public vault;
+    IVault public vault;
 
     bytes4 constant EIP1271_SUCCESS_RETURN_VALUE = 0x1626ba7e;
 
@@ -29,7 +30,7 @@ contract Account is IAccount, IERC1271 {
         _;
     }
 
-     modifier onlySelf() {
+    modifier onlySelf() {
         require(
             msg.sender == address(this),
             "Only self account can call this method"
@@ -37,19 +38,16 @@ contract Account is IAccount, IERC1271 {
         _;
     }
 
-    constructor(address _owner, address _vault) {
+    constructor(address _owner, IVault _vault) {
         owner = _owner;
         vault = _vault;
     }
 
-    function setOwner(
-        address newOwner
-    ) external onlySelf {
+    function setOwner(address newOwner) external onlySelf {
         owner = newOwner;
     }
-    function setVault(
-        address newVault
-    ) external onlySelf {
+
+    function setVault(IVault newVault) external onlySelf {
         vault = newVault;
     }
 
@@ -146,9 +144,17 @@ contract Account is IAccount, IERC1271 {
             require(success);
         }
 
-        // TODO: send specific amount of stable coin here
-        (bool sent, ) = vault.call{value: msg.value/100}("");
-        require(sent, "Failed to send Ether");
+        try
+            IERC20(vault.token()).transfer(address(vault), 1)
+        {} catch (bytes memory revertReason) {
+            if (revertReason.length <= 4) {
+                revert("Failed to transferFrom from users' account");
+            } else {
+                assembly {
+                    revert(add(0x20, revertReason), mload(revertReason))
+                }
+            }
+        }
     }
 
     function executeTransactionFromOutside(

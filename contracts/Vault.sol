@@ -1,40 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Vault {
     IERC20 public immutable token;
+    address public owner;
 
-    constructor(address _token) {
+    constructor(address _owner, address _token) {
+        owner = _owner;
         token = IERC20(_token);
     }
 
     function withdraw(uint256 amount) external {
-        token.transfer(msg.sender, amount);
+        token.transfer(owner, amount);
     }
-}
-
-interface IERC20 {
-    function totalSupply() external view returns (uint256);
-
-    function balanceOf(address account) external view returns (uint256);
-
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
-
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
-
-    function approve(address spender, uint256 amount) external returns (bool);
-
-    function transferFrom(address sender, address recipient, uint256 amount)
-        external
-        returns (bool);
-
-    event Transfer(address indexed from, address indexed to, uint256 amount);
-    event Approval(
-        address indexed owner, address indexed spender, uint256 amount
-    );
 }
