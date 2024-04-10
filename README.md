@@ -121,6 +121,13 @@ $ yarn execute:eraSepolia transferWithPaymaster.ts
 1. Call the Account Factory to deploy new account
 1. Mint stable coin to account
 1. Transfer stable coin and pay the gas fee with Stable Coin Paymaster
+1. Check the system works
+
+-   Sender transfer the token
+-   Recipient receive the token
+-   Vault(Collection) receive the fee
+-   Paymaster pay the gas fee
+
 1. Log the transaction information
 
 ---
