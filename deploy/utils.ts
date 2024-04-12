@@ -78,8 +78,8 @@ export const verifyEnoughBalance = async (wallet: Wallet, amount: bigint) => {
 export const verifyContract = async (data: {
     address: string
     contract: string
-    constructorArguments: string
-    bytecode: string
+    constructorArguments: string | string[],
+    bytecode?: string
 }) => {
     const verificationRequestId: number = await hre.run("verify:verify", {
         ...data,
